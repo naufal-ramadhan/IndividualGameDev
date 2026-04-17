@@ -505,11 +505,12 @@ position = Vector2(-4, 31)
 shape = SubResource("CapsuleShape2D_6myfo")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=895928592]
+zoom = Vector2(1.2, 1.2)
 
 [node name="ShieldSensor" type="Area2D" parent="." unique_id=977639843]
 
 [node name="ShieldHitBox" type="CollisionShape2D" parent="ShieldSensor" unique_id=1332428893]
-position = Vector2(26, 31)
+position = Vector2(0, 31)
 shape = SubResource("RectangleShape2D_5brr7")
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=494818935]
