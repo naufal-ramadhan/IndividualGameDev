@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://30x1xohu7pd8"]
 
 [ext_resource type="PackedScene" uid="uid://bbrjuwa1m21uu" path="res://characters/player/Player.tscn" id="1_oo2mb"]
+[ext_resource type="PackedScene" uid="uid://kxyo8x5ol3ao" path="res://characters/enemies/gangster_melee/GangsterMelee.tscn" id="2_00iop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glxnc"]
 size = Vector2(922.5, 113.5)
@@ -15,3 +16,6 @@ shape = SubResource("RectangleShape2D_glxnc")
 
 [node name="Player" parent="." unique_id=1073017668 instance=ExtResource("1_oo2mb")]
 position = Vector2(97, 223)
+
+[node name="GangsterMelee" parent="." unique_id=1698874819 instance=ExtResource("2_00iop")]
+position = Vector2(859, 219)

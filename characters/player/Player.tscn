@@ -493,6 +493,12 @@ height = 60.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5brr7"]
 size = Vector2(14, 58)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rwtfg"]
+bg_color = Color(0.8752813, 0.801807, 0.12626788, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3iqol"]
+bg_color = Color(0.8509804, 0, 0, 1)
+
 [node name="Player" type="CharacterBody2D" unique_id=1073017668]
 script = ExtResource("1_kjpio")
 
@@ -519,14 +525,25 @@ shape = SubResource("RectangleShape2D_5brr7")
 
 [node name="AmmoLabel" type="Label" parent="UI" unique_id=1654605720]
 offset_left = 20.0
-offset_top = 60.0
+offset_top = 100.0
 offset_right = 106.0
-offset_bottom = 83.0
+offset_bottom = 123.0
 text = "AMMO: 7/7"
 
 [node name="StaminaBar" type="ProgressBar" parent="UI" unique_id=408677605]
 offset_left = 20.0
+offset_top = 60.0
+offset_right = 420.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/fill = SubResource("StyleBoxFlat_rwtfg")
+value = 100.0
+
+[node name="HealthBar" type="ProgressBar" parent="UI" unique_id=1288025310]
+offset_left = 20.0
 offset_top = 20.0
-offset_right = 400.0
-offset_bottom = 47.0
+offset_right = 420.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/fill = SubResource("StyleBoxFlat_3iqol")
 value = 100.0
