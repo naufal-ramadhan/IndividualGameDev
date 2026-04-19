@@ -8,8 +8,8 @@ const STAMINA_DRAIN_RUN = 10.0
 const STAMINA_REGEN_RATE = 15.0
 const MIN_STAMINA_RECOVERY = 30.0 
 const MAX_AMMO = 7
-const ZOOM_DEFAULT = Vector2(1.2, 1.2) # Zoom normal saat jalan
-const ZOOM_SHIELD = Vector2(1.5, 1.5)  # Zoom in saat pakai tameng
+const ZOOM_DEFAULT = Vector2(2.2, 2.2) # Zoom normal saat jalan
+const ZOOM_SHIELD = Vector2(2.5, 2.5)  # Zoom in saat pakai tameng
 
 # --- VARIABEL STATUS ---
 var current_stamina = 100.0
@@ -81,9 +81,9 @@ func _process(delta):
 	if Input.is_action_just_pressed("reload") and current_ammo < MAX_AMMO and not is_reloading and not is_shielding:
 		reload()
 
-	var target_zoom = Vector2(1.2, 1.2)
+	var target_zoom = ZOOM_DEFAULT
 	if is_shielding:
-		target_zoom = Vector2(1.5, 1.5)
+		target_zoom = ZOOM_SHIELD
 	camera.zoom = camera.zoom.lerp(target_zoom, 5.0 * delta)
 	
 	ammo_label.text = "AMMO: " + str(current_ammo) + " / " + str(MAX_AMMO)

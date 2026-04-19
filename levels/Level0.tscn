@@ -4,14 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://kxyo8x5ol3ao" path="res://characters/enemies/gangster_melee/GangsterMelee.tscn" id="2_00iop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glxnc"]
-size = Vector2(922.5, 113.5)
+size = Vector2(1876.5, 113.5)
 
 [node name="Node2D" type="Node2D" unique_id=2094588432]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2045531312]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1451171969]
-position = Vector2(465.75, 344.25)
+position = Vector2(942.75, 344.25)
 shape = SubResource("RectangleShape2D_glxnc")
 
 [node name="Player" parent="." unique_id=1073017668 instance=ExtResource("1_oo2mb")]
@@ -19,3 +19,4 @@ position = Vector2(97, 223)
 
 [node name="GangsterMelee" parent="." unique_id=1698874819 instance=ExtResource("2_00iop")]
 position = Vector2(859, 219)
+can_patrol = true
