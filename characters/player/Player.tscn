@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://2in64wtgxgrk" path="res://assets/characters/player/Run.png" id="7_po6sa"]
 [ext_resource type="Texture2D" uid="uid://c5n2m5mnou185" path="res://assets/characters/player/Shot_1.png" id="8_ir81o"]
 [ext_resource type="Texture2D" uid="uid://cn1hkkvxonffe" path="res://assets/characters/player/Idle_2.png" id="8_rwtfg"]
+[ext_resource type="Texture2D" uid="uid://cb63nj0xkcjns" path="res://assets/characters/player/Bash.png" id="9_3iqol"]
 [ext_resource type="Texture2D" uid="uid://bcowo7p1fd8rr" path="res://assets/characters/player/Walk.png" id="9_7aoru"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5dd86"]
@@ -191,6 +192,10 @@ region = Rect2(1408, 0, 128, 128)
 atlas = ExtResource("8_rwtfg")
 region = Rect2(0, 0, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv25b"]
+atlas = ExtResource("9_3iqol")
+region = Rect2(256, 0, 128, 128)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_o4jqb"]
 atlas = ExtResource("8_ir81o")
 region = Rect2(0, 0, 128, 128)
@@ -258,36 +263,36 @@ region = Rect2(1408, 0, 128, 128)
 [sub_resource type="SpriteFrames" id="SpriteFrames_7cktu"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_5dd86")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_ohrde")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_k06rn")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_u7nq2")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_iabyh")
 }],
-"loop": true,
+"loop": false,
 "name": &"dead",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_r4f2b")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_hkjel")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_37vqa")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 5.0
 }, {
@@ -428,6 +433,14 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 0.01,
+"texture": SubResource("AtlasTexture_mv25b")
+}],
+"loop": true,
+"name": &"shield_bash",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 0.4,
 "texture": SubResource("AtlasTexture_o4jqb")
 }, {
@@ -488,10 +501,10 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6myfo"]
 radius = 21.0
-height = 60.0
+height = 68.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5brr7"]
-size = Vector2(14, 58)
+size = Vector2(29, 58)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rwtfg"]
 bg_color = Color(0.8752813, 0.801807, 0.12626788, 1)
@@ -504,7 +517,7 @@ script = ExtResource("1_kjpio")
 
 [node name="CharacterVisualAnimated" type="AnimatedSprite2D" parent="." unique_id=1821868292]
 sprite_frames = SubResource("SpriteFrames_7cktu")
-animation = &"shoot"
+animation = &"hurt"
 
 [node name="CharacterHitBox" type="CollisionShape2D" parent="." unique_id=1443350076]
 position = Vector2(-4, 31)
@@ -514,6 +527,7 @@ shape = SubResource("CapsuleShape2D_6myfo")
 zoom = Vector2(1.2, 1.2)
 
 [node name="ShieldSensor" type="Area2D" parent="." unique_id=977639843]
+position = Vector2(-40, 0)
 
 [node name="ShieldHitBox" type="CollisionShape2D" parent="ShieldSensor" unique_id=1332428893]
 position = Vector2(0, 31)
