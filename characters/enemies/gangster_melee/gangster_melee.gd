@@ -8,7 +8,6 @@ const MELEE_DAMAGE = 15.0
 var hp = 100.0
 
 # --- SETTING DI EDITOR ---
-# Klik musuh di Scene Level, lihat Inspector kanan. Kamu bisa centang/uncentang ini!
 @export var can_patrol: bool = false 
 
 # --- VARIABEL STATUS ---
@@ -18,7 +17,7 @@ var is_attacking = false
 var is_hurt = false
 var is_dead = false
 var can_attack = true
-var player_in_attack_range = false # TAMBAHAN: Untuk ngecek pemain masih nempel
+var player_in_attack_range = false
 
 # --- VARIABEL PATROLI ---
 var patrol_direction = 1
@@ -34,9 +33,8 @@ func _ready():
 	detector.body_entered.connect(_on_player_entered)
 	detector.body_exited.connect(_on_player_exited)
 	
-	# Hubungkan sinyal masuk dan keluar dari kotak pukul
 	attack_range.body_entered.connect(_on_attack_range_entered)
-	attack_range.body_exited.connect(_on_attack_range_exited) # Sinyal Baru!
+	attack_range.body_exited.connect(_on_attack_range_exited)
 
 func _physics_process(delta):
 	if is_dead or is_hurt:
@@ -94,18 +92,15 @@ func do_patrol(delta):
 			patrol_timer = randf_range(2.0, 4.0) # Diam istirahat 2-4 detik
 		else:
 			patrol_timer = randf_range(3.0, 6.0) # Jalan keliling 3-6 detik
-			# 50% peluang putar balik saat mulai jalan lagi
 			if randf() > 0.5:
 				patrol_direction *= -1
 
-	# Jalankan pergerakannya
 	if is_patrol_resting:
 		velocity.x = move_toward(velocity.x, 0, PATROL_SPEED)
 		play_idle_logic()
 	else:
 		velocity.x = patrol_direction * PATROL_SPEED
 		flip_character(patrol_direction)
-		# Kalau punya animasi jalan santai ("walk"), pakai itu. Kalau ga ada, pakai "run".
 		anim.play("walk") 
 
 func play_idle_logic():
@@ -159,13 +154,18 @@ func take_damage(amount):
 	
 	hp -= amount
 	is_hurt = true
-	velocity.x = 0 # Terpental/Berhenti sejenak saat ditembak
+	velocity.x = 0 # Berhenti sejenak karena shock
 	
+	if not is_chasing:
+		var p = get_tree().get_first_node_in_group("player")
+		if p:
+			player_target = p
+			is_chasing = true
+
 	if hp <= 0:
 		die()
 	else:
 		anim.play("hurt")
-		print("Gangster terkena tembakan! HP sisa: ", hp)
 		await get_tree().create_timer(0.3).timeout
 		is_hurt = false
 

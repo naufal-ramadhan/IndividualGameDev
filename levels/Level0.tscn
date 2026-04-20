@@ -15,7 +15,7 @@ size = Vector2(1876.5, 113.5)
 position = Vector2(942.75, 344.25)
 shape = SubResource("RectangleShape2D_glxnc")
 
-[node name="Player" parent="." unique_id=1073017668 instance=ExtResource("1_oo2mb")]
+[node name="Player" parent="." unique_id=1073017668 groups=["player"] instance=ExtResource("1_oo2mb")]
 position = Vector2(97, 223)
 bullet_scene = ExtResource("2_1jtlb")
 
