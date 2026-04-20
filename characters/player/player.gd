@@ -28,6 +28,9 @@ var is_exhausted = false
 @onready var ammo_label = $UI/AmmoLabel
 @onready var stamina_bar = $UI/StaminaBar
 
+# --- REFERENSI SCENE ---
+@export var bullet_scene: PackedScene
+
 func _ready():
 	shield_sensor.position.x = 15
 	muzzle.position.x = 20
@@ -109,8 +112,20 @@ func shoot():
 		is_shooting = true
 		current_ammo -= 1
 		anim.play("shoot")
-		
 		print("DOR! Sisa peluru: ", current_ammo)
+		
+		# --- PROSES SPAWN PELURU ---
+		if bullet_scene != null:
+			var bullet = bullet_scene.instantiate() # Gandakan peluru
+			
+			# Tentukan arah peluru (1 jika hadap kanan, -1 jika kiri)
+			bullet.direction = -1 if anim.flip_h else 1
+			
+			# Set posisi peluru agar muncul persis di node Muzzle
+			bullet.global_position = muzzle.global_position
+			
+			# Masukkan peluru ke dalam dunia game
+			get_tree().root.add_child(bullet)
 		
 		await get_tree().create_timer(0.3).timeout 
 		is_shooting = false

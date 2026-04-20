@@ -5,6 +5,7 @@ const SPEED = 110.0
 const PATROL_SPEED = 50.0 # Kecepatan saat santai/patroli
 const GRAVITY = 900.0
 const MELEE_DAMAGE = 15.0
+var hp = 100.0
 
 # --- SETTING DI EDITOR ---
 # Klik musuh di Scene Level, lihat Inspector kanan. Kamu bisa centang/uncentang ini!
@@ -156,9 +157,32 @@ func _on_player_exited(body):
 func take_damage(amount):
 	if is_dead: return
 	
+	hp -= amount
 	is_hurt = true
-	anim.play("hurt")
-	print("Gangster: Aduh!")
+	velocity.x = 0 # Terpental/Berhenti sejenak saat ditembak
 	
-	await get_tree().create_timer(0.3).timeout
-	is_hurt = false
+	if hp <= 0:
+		die()
+	else:
+		anim.play("hurt")
+		print("Gangster terkena tembakan! HP sisa: ", hp)
+		await get_tree().create_timer(0.3).timeout
+		is_hurt = false
+
+func die():
+	is_dead = true
+	anim.play("dead")
+	
+	$CharacterHitBox.set_deferred("disabled", true)
+	
+	attack_range.set_deferred("monitoring", false)
+	detector.set_deferred("monitoring", false)
+	
+	z_index = -1
+	
+	set_physics_process(false)
+	set_process(false)
+	
+	print("Gangster Mati & Menjadi Background!")
+	await get_tree().create_timer(30.0).timeout
+	queue_free()

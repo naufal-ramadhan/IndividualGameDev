@@ -432,7 +432,7 @@ animations = [{
 "duration": 0.4,
 "texture": SubResource("AtlasTexture_e6se8")
 }],
-"loop": true,
+"loop": false,
 "name": &"dead",
 "speed": 5.0
 }, {
@@ -656,7 +656,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4lofo"]
 radius = 14.0
-height = 70.0
+height = 66.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2w1rx"]
 radius = 150.0
@@ -673,12 +673,14 @@ animation = &"dead"
 
 [node name="CharacterHitBox" type="CollisionShape2D" parent="." unique_id=997627723]
 position = Vector2(0, 31)
+scale = Vector2(0.9985635, 1)
 shape = SubResource("CapsuleShape2D_4lofo")
 
 [node name="PlayerDetector" type="Area2D" parent="." unique_id=606925603]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=1140713861]
 position = Vector2(-5, 33)
+scale = Vector2(1, 0.9826387)
 shape = SubResource("CircleShape2D_2w1rx")
 
 [node name="AttackRange" type="Area2D" parent="." unique_id=280615004]

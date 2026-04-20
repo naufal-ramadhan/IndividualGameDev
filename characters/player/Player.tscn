@@ -428,16 +428,16 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_o4jqb")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_mqc8q")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_qfbh3")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_oma04")
 }],
 "loop": true,
@@ -504,7 +504,7 @@ script = ExtResource("1_kjpio")
 
 [node name="CharacterVisualAnimated" type="AnimatedSprite2D" parent="." unique_id=1821868292]
 sprite_frames = SubResource("SpriteFrames_7cktu")
-animation = &"reload"
+animation = &"shoot"
 
 [node name="CharacterHitBox" type="CollisionShape2D" parent="." unique_id=1443350076]
 position = Vector2(-4, 31)
@@ -520,6 +520,7 @@ position = Vector2(0, 31)
 shape = SubResource("RectangleShape2D_5brr7")
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=494818935]
+position = Vector2(30, 9)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=18200596]
 
