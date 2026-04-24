@@ -677,6 +677,8 @@ scale = Vector2(0.9985635, 1)
 shape = SubResource("CapsuleShape2D_4lofo")
 
 [node name="PlayerDetector" type="Area2D" parent="." unique_id=606925603]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=1140713861]
 position = Vector2(-5, 33)
@@ -685,6 +687,8 @@ shape = SubResource("CircleShape2D_2w1rx")
 
 [node name="AttackRange" type="Area2D" parent="." unique_id=280615004]
 position = Vector2(34, 30)
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1203687933]
 position = Vector2(-14.4375, 0)
