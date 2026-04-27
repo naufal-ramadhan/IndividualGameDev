@@ -671,7 +671,7 @@ script = ExtResource("1_slg7u")
 
 [node name="CharacterVisualAnimated" type="AnimatedSprite2D" parent="." unique_id=1529142760]
 sprite_frames = SubResource("SpriteFrames_ag1f3")
-animation = &"dead"
+animation = &"hurt"
 
 [node name="CharacterHitBox" type="CollisionShape2D" parent="." unique_id=997627723]
 position = Vector2(0, 31)

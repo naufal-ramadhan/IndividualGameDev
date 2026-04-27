@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://kxyo8x5ol3ao" path="res://characters/enemies/gangster_melee/GangsterMelee.tscn" id="2_00iop"]
 [ext_resource type="PackedScene" uid="uid://3wd6ctc4n3r3" path="res://projectiles/Bullet.tscn" id="2_1jtlb"]
 [ext_resource type="PackedScene" uid="uid://dh7jy6e67crmg" path="res://characters/enemies/gangster_shooter/GangsterShooter.tscn" id="4_n5jrs"]
+[ext_resource type="PackedScene" uid="uid://bpoadddwcgoij" path="res://characters/enemies/gangster_shooter/GangsterPistol.tscn" id="5_3d6os"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glxnc"]
 size = Vector2(1876.5, 113.5)
@@ -27,3 +28,12 @@ bullet_scene = ExtResource("2_1jtlb")
 [node name="GangsterMelee" parent="." unique_id=1698874819 instance=ExtResource("2_00iop")]
 position = Vector2(670, 219)
 can_patrol = true
+
+[node name="GangsterShooter2" parent="." unique_id=160596435 instance=ExtResource("5_3d6os")]
+position = Vector2(1754, 222)
+bullet_scene = ExtResource("2_1jtlb")
+fire_rate = 0.24
+burst_count = 1
+reload_delay = 1.5
+windup_time = 0.72
+animate_per_shot = true

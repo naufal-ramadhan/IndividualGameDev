@@ -8,6 +8,7 @@ extends PatrollingEnemy
 @export var fire_rate: float = 0.2     # Jeda antar peluru
 @export var burst_count: int = 3       # Jumlah peluru per tembakan
 @export var reload_delay: float = 2.0  # Waktu jeda (cooldown) setelah nembak
+@export var windup_time: float = 0.0
 
 # SAKELAR AJAIB: 
 # ON (Centang) = Animasi nembak diulang per peluru (Cocok untuk Pistol/Shotgun)
@@ -99,31 +100,37 @@ func shoot_burst(direction):
 		anim.play("shoot")
 
 	for i in range(burst_count):
-		# PENTING: Batal berondong kalau AI keburu mati atau dipukul Player!
 		if is_dead or is_hurt:
 			break 
 			
 		# JIKA PISTOL: Mainkan animasi setiap kali pelatuk ditarik
 		if animate_per_shot:
-			anim.stop() # Reset frame
+			anim.stop() 
 			anim.play("shoot")
 		
-		# Spawn Peluru
+		# --- FASE 1: WIND-UP (SIAP-SIAP NEMBAK) ---
+		# Hanya berjalan jika windup_time disetel > 0 di Inspector
+		if windup_time > 0.0:
+			await get_tree().create_timer(windup_time).timeout
+			# Cek lagi, kalau pas lagi angkat pistol dia dipukul Player, batal nembak!
+			if is_dead or is_hurt:
+				break
+		
+		# --- FASE 2: PELURU KELUAR ---
 		if bullet_scene != null:
 			var bullet = bullet_scene.instantiate()
 			bullet.direction = direction
 			bullet.global_position = muzzle.global_position
 			get_tree().root.add_child(bullet)
 			
-		# Tunggu jeda fire rate sebelum peluru berikutnya
+		# --- FASE 3: JEDA / SISA ANIMASI ---
+		# Untuk SMG: Ini jeda berondongan. Untuk Pistol: Ini sisa waktu buat nurunin senjata.
 		await get_tree().create_timer(fire_rate).timeout
 	
 	is_shooting = false
 	
-	# Cooldown / Fase Reload setelah berondongan selesai
 	await get_tree().create_timer(reload_delay).timeout
 	can_shoot = true
-
 # ==========================================
 # MANAJEMEN ANIMASI (VISUAL)
 # ==========================================
