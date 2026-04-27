@@ -513,6 +513,8 @@ bg_color = Color(0.8752813, 0.801807, 0.12626788, 1)
 bg_color = Color(0.8509804, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D" unique_id=1073017668]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_kjpio")
 
 [node name="CharacterVisualAnimated" type="AnimatedSprite2D" parent="." unique_id=1821868292]
