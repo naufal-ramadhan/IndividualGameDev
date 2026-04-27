@@ -25,6 +25,13 @@ var can_shoot = true
 var player_in_shoot_range = false
 
 # ==========================================
+# PENGATURAN SENSOR (Diatur via Inspector Editor)
+# ==========================================
+@export_category("Sensor Offsets")
+@export var shoot_range_right: float = 34.0
+@export var shoot_range_left: float = -223.0
+
+# ==========================================
 # REFERENSI NODE
 # ==========================================
 @onready var anim = $CharacterVisualAnimated 
@@ -161,16 +168,16 @@ func play_idle_logic():
 	if randf() < 0.005: anim.play("idle2")
 	else: anim.play("idle1")
 
-# Override dari PatrollingEnemy: Shooter harus membalikkan Muzzle-nya juga
+# Override dari PatrollingEnemy: Shooter harus membalikkan Muzzle dan Sensornya
 func flip_character(direction):
 	if direction > 0: 
 		anim.flip_h = false
 		muzzle.position.x = abs(muzzle.position.x)
-		shoot_range.position.x = 34
+		shoot_range.position.x = shoot_range_right # Pakai variabel
 	elif direction < 0: 
 		anim.flip_h = true
 		muzzle.position.x = -abs(muzzle.position.x)
-		shoot_range.position.x = -223
+		shoot_range.position.x = shoot_range_left # Pakai variabel
 
 # ==========================================
 # OVERRIDE & SINYAL SENSOR

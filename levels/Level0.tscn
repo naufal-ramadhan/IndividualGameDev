@@ -43,4 +43,5 @@ burst_count = 1
 reload_delay = 1.5
 windup_time = 0.72
 animate_per_shot = true
+shoot_range_left = -338.0
 max_hp = 70.0

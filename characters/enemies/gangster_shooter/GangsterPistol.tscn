@@ -486,10 +486,10 @@ radius = 14.0
 height = 66.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2w1rx"]
-radius = 248.00209
+radius = 367.20313
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_slg7u"]
-size = Vector2(225.875, 71)
+size = Vector2(341.875, 71)
 
 [node name="GangsterShooter" type="CharacterBody2D" unique_id=1698874819]
 collision_layer = 4
@@ -515,12 +515,12 @@ scale = Vector2(1, 0.9826387)
 shape = SubResource("CircleShape2D_2w1rx")
 
 [node name="ShootRange" type="Area2D" parent="." unique_id=280615004]
-position = Vector2(34, 30)
+position = Vector2(-338, 30)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShootRange" unique_id=1203687933]
-position = Vector2(94.0625, 0)
+position = Vector2(152.0625, 0)
 shape = SubResource("RectangleShape2D_slg7u")
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=1188758409]
