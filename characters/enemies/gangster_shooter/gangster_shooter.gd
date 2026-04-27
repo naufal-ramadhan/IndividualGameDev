@@ -6,6 +6,7 @@ extends PatrollingEnemy
 @export_category("Weapon Settings")
 @export var bullet_scene: PackedScene
 @export var fire_rate: float = 0.2     # Jeda antar peluru
+@export var damage_mult: float = 1.0
 @export var burst_count: int = 3       # Jumlah peluru per tembakan
 @export var reload_delay: float = 2.0  # Waktu jeda (cooldown) setelah nembak
 @export var windup_time: float = 0.0
@@ -121,6 +122,11 @@ func shoot_burst(direction):
 			var bullet = bullet_scene.instantiate()
 			bullet.direction = direction
 			bullet.global_position = muzzle.global_position
+			
+			# SEKARANG PASTI JALAN: Kalikan damage asli peluru (25) dengan multiplier di Inspector (misal 0.2)
+			if "damage" in bullet:
+				bullet.damage = bullet.damage * damage_mult
+				
 			get_tree().root.add_child(bullet)
 			
 		# --- FASE 3: JEDA / SISA ANIMASI ---
