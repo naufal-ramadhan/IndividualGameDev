@@ -15,10 +15,6 @@ func _physics_process(delta):
 	position.x += direction * SPEED * delta
 
 func _on_body_entered(body):
-	# Abaikan jika yang ditabrak adalah Player itu sendiri
-	if body.name == "Player":
-		return
-		
 	# Cek apakah yang ditabrak punya fungsi take_damage (berarti itu musuh)
 	if body.has_method("take_damage"):
 		body.take_damage(DAMAGE)

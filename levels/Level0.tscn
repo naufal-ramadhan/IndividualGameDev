@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bbrjuwa1m21uu" path="res://characters/player/Player.tscn" id="1_oo2mb"]
 [ext_resource type="PackedScene" uid="uid://kxyo8x5ol3ao" path="res://characters/enemies/gangster_melee/GangsterMelee.tscn" id="2_00iop"]
 [ext_resource type="PackedScene" uid="uid://3wd6ctc4n3r3" path="res://projectiles/Bullet.tscn" id="2_1jtlb"]
+[ext_resource type="PackedScene" uid="uid://dh7jy6e67crmg" path="res://characters/enemies/gangster_shooter/GangsterShooter.tscn" id="4_n5jrs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glxnc"]
 size = Vector2(1876.5, 113.5)
@@ -17,12 +18,12 @@ shape = SubResource("RectangleShape2D_glxnc")
 
 [node name="Player" parent="." unique_id=1073017668 groups=["player"] instance=ExtResource("1_oo2mb")]
 position = Vector2(97, 223)
-collision_layer = 2
-collision_mask = 5
+bullet_scene = ExtResource("2_1jtlb")
+
+[node name="GangsterShooter" parent="." unique_id=1621898163 instance=ExtResource("4_n5jrs")]
+position = Vector2(1284, 221)
 bullet_scene = ExtResource("2_1jtlb")
 
 [node name="GangsterMelee" parent="." unique_id=1698874819 instance=ExtResource("2_00iop")]
-position = Vector2(859, 219)
-collision_layer = 4
-collision_mask = 3
+position = Vector2(670, 219)
 can_patrol = true

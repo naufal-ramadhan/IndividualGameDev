@@ -1,31 +1,48 @@
 extends PatrollingEnemy
 
 # ==========================================
-# PENGATURAN SENJATA (Flekibel via Editor)
+# PENGATURAN SENJATA (Diatur via Inspector Editor)
 # ==========================================
+@export_category("Weapon Settings")
 @export var bullet_scene: PackedScene
-@export var fire_rate: float = 0.2     # Jeda antar peluru (Makin kecil = makin cepat)
-@export var burst_count: int = 3       # Jumlah peluru sekali tarik pelatuk
-@export var reload_delay: float = 2.0  # Jeda "Reload" setelah burst selesai
+@export var fire_rate: float = 0.2     # Jeda antar peluru
+@export var burst_count: int = 3       # Jumlah peluru per tembakan
+@export var reload_delay: float = 2.0  # Waktu jeda (cooldown) setelah nembak
 
+# SAKELAR AJAIB: 
+# ON (Centang) = Animasi nembak diulang per peluru (Cocok untuk Pistol/Shotgun)
+# OFF (Kosong) = Animasi main sekali dan ditahan (Cocok untuk SMG/Assault Rifle)
+@export var animate_per_shot: bool = false 
+
+# ==========================================
+# VARIABEL STATUS KHUSUS SHOOTER
+# ==========================================
+# (hp, is_dead, is_hurt, patrol_speed, chase_speed sudah diwarisi dari PatrollingEnemy)
 var is_shooting = false
 var can_shoot = true
 var player_in_shoot_range = false
 
+# ==========================================
+# REFERENSI NODE
+# ==========================================
 @onready var anim = $CharacterVisualAnimated 
 @onready var detector = $PlayerDetector
 @onready var shoot_range = $ShootRange 
-@onready var muzzle = $Muzzle # Titik keluar peluru
+@onready var muzzle = $Muzzle # Node Marker2D untuk tempat keluar peluru
 
+# ==========================================
+# INISIALISASI
+# ==========================================
 func _ready():
 	detector.body_entered.connect(_on_player_entered)
 	shoot_range.body_entered.connect(_on_shoot_range_entered)
 	shoot_range.body_exited.connect(_on_shoot_range_exited)
 
 # ==========================================
-# MESIN UTAMA (AI SHOOTER)
+# MESIN UTAMA (OTAK AI SHOOTER)
 # ==========================================
 func _physics_process(delta):
+	# 1. Kalau mati, stop mikir
 	if is_dead:
 		velocity.x = 0
 		if not is_on_floor(): velocity.y += gravity * delta
@@ -33,52 +50,63 @@ func _physics_process(delta):
 		update_animations()
 		return
 
+	# 2. Fisika Dasar & Knockback
 	velocity.x += knockback_force.x
 	knockback_force.x = move_toward(knockback_force.x, 0, 800 * delta)
 	if not is_on_floor(): velocity.y += gravity * delta
 
-	# Jika kena hit, hentikan pergerakan (TAPI script tembak juga harus dibatalkan)
+	# 3. Kalau kena hit, cancel semua gerakan (termasuk nembak)
 	if is_hurt:
 		move_and_slide() 
 		update_animations() 
 		return 
 
+	# 4. Logika AI
 	if is_shooting:
-		velocity.x = 0 # Berhenti bergerak saat menembak
+		velocity.x = 0 # Harus berhenti jalan kalau lagi nembak
+		
 	elif is_chasing and player_target != null:
 		var direction = sign(player_target.global_position.x - global_position.x)
 		flip_character(direction)
 		
 		if player_in_shoot_range:
-			velocity.x = 0 # Stop lari kalau sudah masuk jarak tembak
+			velocity.x = 0 # Berhenti lari kalau Player sudah masuk jarak tembak
 			if can_shoot:
 				shoot_burst(direction)
 		else:
-			# Lari mendekat kalau target di luar jarak tembak
-			velocity.x = direction * chase_speed 
+			velocity.x = direction * chase_speed # Kejar kalau masih di luar jangkauan
+			
 	else:
+		# Panggil fungsi patroli warisan dari bapaknya (PatrollingEnemy)
 		if can_patrol:
 			do_patrol(delta)
 		else:
 			velocity.x = move_toward(velocity.x, 0, chase_speed) 
 
+	# 5. Eksekusi
 	move_and_slide()
 	update_animations()
 
 # ==========================================
-# LOGIKA MENEMBAK (BURST SYSTEM)
+# LOGIKA MENEMBAK (BURST & SAKELAR ANIMASI)
 # ==========================================
 func shoot_burst(direction):
 	is_shooting = true
 	can_shoot = false
 
-	# Lakukan perulangan sebanyak jumlah peluru
+	# JIKA SMG: Mainkan animasi nahan senjata sekali saja di awal
+	if not animate_per_shot:
+		anim.play("shoot")
+
 	for i in range(burst_count):
-		# PENTING: Batal nembak kalau di pertengahan burst musuh ini mati atau kena hit Player!
+		# PENTING: Batal berondong kalau AI keburu mati atau dipukul Player!
 		if is_dead or is_hurt:
 			break 
 			
-		anim.play("shoot")
+		# JIKA PISTOL: Mainkan animasi setiap kali pelatuk ditarik
+		if animate_per_shot:
+			anim.stop() # Reset frame
+			anim.play("shoot")
 		
 		# Spawn Peluru
 		if bullet_scene != null:
@@ -87,17 +115,17 @@ func shoot_burst(direction):
 			bullet.global_position = muzzle.global_position
 			get_tree().root.add_child(bullet)
 			
-		# Tunggu jeda antar peluru (Fire Rate)
+		# Tunggu jeda fire rate sebelum peluru berikutnya
 		await get_tree().create_timer(fire_rate).timeout
 	
 	is_shooting = false
 	
-	# Fase "Reload" / Cooldown sebelum bisa mulai burst lagi
+	# Cooldown / Fase Reload setelah berondongan selesai
 	await get_tree().create_timer(reload_delay).timeout
 	can_shoot = true
 
 # ==========================================
-# MANAJEMEN ANIMASI & ARAH
+# MANAJEMEN ANIMASI (VISUAL)
 # ==========================================
 func update_animations():
 	if is_dead:
@@ -120,19 +148,25 @@ func play_idle_logic():
 	if randf() < 0.005: anim.play("idle2")
 	else: anim.play("idle1")
 
+# Override dari PatrollingEnemy: Shooter harus membalikkan Muzzle-nya juga
 func flip_character(direction):
 	if direction > 0: 
 		anim.flip_h = false
 		muzzle.position.x = abs(muzzle.position.x)
+		shoot_range.position.x = 34
 	elif direction < 0: 
 		anim.flip_h = true
 		muzzle.position.x = -abs(muzzle.position.x)
+		shoot_range.position.x = -223
 
 # ==========================================
-# OVERRIDE & SENSOR
+# OVERRIDE & SINYAL SENSOR
 # ==========================================
 func die():
+	# Jalankan logika hantu dari BaseEnemy
 	super.die()
+	
+	# Matikan sensor khusus Shooter
 	shoot_range.set_deferred("monitoring", false)
 	detector.set_deferred("monitoring", false)
 
