@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://iqjy4rkyfgen"]
 
 [ext_resource type="Script" uid="uid://dxhgqlyc7hkp" path="res://menus/game_over/game_over.gd" id="1_e7rg5"]
+[ext_resource type="FontFile" uid="uid://bql104ftcaiir" path="res://assets/fonts/PixelifySans-VariableFont_wght.ttf" id="2_a0plv"]
 [ext_resource type="AudioStream" uid="uid://dn0j0mhxtg50f" path="res://assets/BGM/GameOverBGM.mp3" id="2_omgdn"]
+[ext_resource type="AudioStream" uid="uid://qc1p6ngu2n1u" path="res://assets/SFX/ButtonSFX.mp3" id="4_so37a"]
 
 [node name="GameOverUI" type="ColorRect" unique_id=1869923488]
 anchors_preset = 15
@@ -22,6 +24,7 @@ offset_top = 91.0
 offset_right = 94.5
 offset_bottom = 146.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_a0plv")
 theme_override_font_sizes/font_size = 40
 text = "YOU DIED"
 
@@ -39,8 +42,10 @@ offset_right = 62.5
 offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_a0plv")
 theme_override_font_sizes/font_size = 32
 text = "RESTART GAME"
+flat = true
 
 [node name="MainButton" type="Button" parent="." unique_id=455294129]
 process_mode = 3
@@ -56,8 +61,10 @@ offset_right = 121.0
 offset_bottom = 92.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_a0plv")
 theme_override_font_sizes/font_size = 32
 text = "MAIN MENU"
+flat = true
 
 [node name="RoundLabel" type="Label" parent="." unique_id=879429950]
 layout_mode = 1
@@ -72,11 +79,16 @@ offset_right = 20.0
 offset_bottom = -108.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_a0plv")
 theme_override_font_sizes/font_size = 22
 text = "Rounds: 0"
 
 [node name="GameOverBGM" type="AudioStreamPlayer2D" parent="." unique_id=1300672201]
 stream = ExtResource("2_omgdn")
+
+[node name="ClickSFX" type="AudioStreamPlayer2D" parent="." unique_id=594242005]
+process_mode = 3
+stream = ExtResource("4_so37a")
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="MainButton" to="." method="_on_main_menu_pressed"]

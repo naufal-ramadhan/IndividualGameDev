@@ -79,7 +79,7 @@ tile_map_data = PackedByteArray("AAAAABMABgAAAAAAAAABABMABgAAAAAAAAACABMABgAAAAA
 tile_set = SubResource("TileSet_1bxb8")
 
 [node name="Player" parent="." unique_id=1073017668 groups=["player"] instance=ExtResource("101_vkckm")]
-position = Vector2(126, 441)
+position = Vector2(556, 538)
 bullet_scene = ExtResource("5_vi6ws")
 
 [node name="WallKanan" type="StaticBody2D" parent="." unique_id=1018733869]

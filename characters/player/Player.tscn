@@ -11,7 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://cn1hkkvxonffe" path="res://assets/characters/player/Idle_2.png" id="8_rwtfg"]
 [ext_resource type="Texture2D" uid="uid://cb63nj0xkcjns" path="res://assets/characters/player/Bash.png" id="9_3iqol"]
 [ext_resource type="Texture2D" uid="uid://bcowo7p1fd8rr" path="res://assets/characters/player/Walk.png" id="9_7aoru"]
+[ext_resource type="FontFile" uid="uid://bql104ftcaiir" path="res://assets/fonts/PixelifySans-VariableFont_wght.ttf" id="12_5dd86"]
 [ext_resource type="PackedScene" uid="uid://iqjy4rkyfgen" path="res://menus/game_over/game_over.tscn" id="12_mv25b"]
+[ext_resource type="Texture2D" uid="uid://dngs3msgsjyc7" path="res://assets/power_ups/ammo-pistol 32px.png" id="13_7aoru"]
 [ext_resource type="AudioStream" uid="uid://bycdyldpjbfab" path="res://assets/SFX/SilencedPistolSFX.mp3" id="13_ratqf"]
 [ext_resource type="AudioStream" uid="uid://duxj8y155odn7" path="res://assets/SFX/PickUpSFX.mp3" id="14_ir81o"]
 [ext_resource type="AudioStream" uid="uid://dkh4ou5ixwrxi" path="res://assets/SFX/ReloadSFX.mp3" id="15_7aoru"]
@@ -511,11 +513,25 @@ height = 68.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5brr7"]
 size = Vector2(29, 58)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ir81o"]
+bg_color = Color(0, 0, 0, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rwtfg"]
 bg_color = Color(0.8752813, 0.801807, 0.12626788, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7aoru"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3iqol"]
 bg_color = Color(0.8509804, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 
 [node name="Player" type="CharacterBody2D" unique_id=1073017668]
 collision_layer = 2
@@ -531,7 +547,7 @@ position = Vector2(-4, 31)
 shape = SubResource("CapsuleShape2D_6myfo")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=895928592]
-zoom = Vector2(1.2, 1.2)
+zoom = Vector2(0.7, 0.7)
 
 [node name="ShieldSensor" type="Area2D" parent="." unique_id=977639843]
 position = Vector2(-40, 0)
@@ -548,18 +564,22 @@ position = Vector2(30, 9)
 [node name="UI" type="CanvasLayer" parent="." unique_id=18200596]
 
 [node name="AmmoLabel" type="Label" parent="UI" unique_id=1654605720]
-offset_left = 20.0
-offset_top = 100.0
-offset_right = 106.0
-offset_bottom = 123.0
+offset_left = 62.0
+offset_top = 91.0
+offset_right = 148.0
+offset_bottom = 114.0
+scale = Vector2(0.7, 0.7)
+theme_override_fonts/font = ExtResource("12_5dd86")
 text = "AMMO: 7/7"
 
 [node name="StaminaBar" type="ProgressBar" parent="UI" unique_id=408677605]
 offset_left = 20.0
-offset_top = 60.0
+offset_top = 52.0
 offset_right = 420.0
-offset_bottom = 90.0
+offset_bottom = 82.0
+scale = Vector2(0.7, 0.7)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_ir81o")
 theme_override_styles/fill = SubResource("StyleBoxFlat_rwtfg")
 value = 100.0
 
@@ -568,7 +588,10 @@ offset_left = 20.0
 offset_top = 20.0
 offset_right = 420.0
 offset_bottom = 50.0
+scale = Vector2(0.7, 0.7)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("12_5dd86")
+theme_override_styles/background = SubResource("StyleBoxFlat_7aoru")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3iqol")
 value = 100.0
 
@@ -576,9 +599,12 @@ value = 100.0
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -68.0
-offset_bottom = 23.0
+offset_left = -99.0
+offset_right = 28.0
+offset_bottom = 42.0
 grow_horizontal = 0
+scale = Vector2(0.6, 0.6)
+theme_override_fonts/font = ExtResource("12_5dd86")
 theme_override_font_sizes/font_size = 30
 text = "Round: 1"
 
@@ -595,9 +621,17 @@ offset_right = 272.5
 offset_bottom = 114.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("12_5dd86")
 theme_override_font_sizes/font_size = 40
 text = "ROUND 1"
 horizontal_alignment = 1
+
+[node name="AmmoIcon" type="TextureRect" parent="UI" unique_id=1640156942]
+offset_left = 19.0
+offset_top = 83.0
+offset_right = 52.0
+offset_bottom = 115.0
+texture = ExtResource("13_7aoru")
 
 [node name="GameOverUI" parent="UI" unique_id=1869923488 instance=ExtResource("12_mv25b")]
 process_mode = 3

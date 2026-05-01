@@ -10,8 +10,8 @@ const STAMINA_DRAIN_RUN = 10.0
 const STAMINA_REGEN_RATE = 15.0
 const MIN_STAMINA_RECOVERY = 30.0 
 const MAX_AMMO = 7
-const ZOOM_DEFAULT = Vector2(2.2, 2.2)
-const ZOOM_SHIELD = Vector2(2.5, 2.5)  
+const ZOOM_DEFAULT = Vector2(1, 1)
+const ZOOM_SHIELD = Vector2(1.3, 1.3)  
 const MAX_HEALTH = 100.0
 const BASH_DAMAGE = 10.0
 const BASH_KNOCKBACK = 1200.0
@@ -311,22 +311,26 @@ func die():
 	is_dead = true
 	set_collision_layer_value(1, false)
 	
-	# ==========================================
-	# SAPU BERSIH SUARA MUSUH!
-	# ==========================================
 	var semua_musuh = get_tree().get_nodes_in_group("enemy")
 	for musuh in semua_musuh:
-		# Hentikan suara tembakan kalau ada
 		if musuh.has_node("ShootSFX"):
 			musuh.get_node("ShootSFX").stop()
-		# Hentikan suara pukulan kalau ada
 		if musuh.has_node("PunchSFX"):
 			musuh.get_node("PunchSFX").stop()
 	# ==========================================
 	
-	# Update UI Game Over
 	$UI/GameOverUI/RoundLabel.text = "YOU SURVIVED UNTIL ROUND " + str(current_wave)
+	
+	$UI/GameOverUI.modulate.a = 0.0
 	$UI/GameOverUI.show()
+	
+	# 2. Bikin efek Fade-in menggunakan Tween
+	var tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) 
+	
+	# Animasikan Alpha dari 0.0 ke 1.0 (Penuh) selama 1.5 detik (Bisa diatur waktunya)
+	tween.tween_property($UI/GameOverUI, "modulate:a", 1.0, 0.07)
+	
 	$UI/GameOverUI/GameOverBGM.play()
 	
 	# Matikan BGM Utama

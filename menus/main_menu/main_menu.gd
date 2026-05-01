@@ -1,8 +1,11 @@
 extends Control
 
 func _on_play_pressed():
-	# Ganti "res://main_level.tscn" dengan nama scene utama game kamu!
+	$ClickSFX.play()
+	await get_tree().create_timer(0.05).timeout
 	get_tree().change_scene_to_file("res://levels/Level1.tscn")
 
 func _on_quit_pressed():
+	$ClickSFX.play()
+	await get_tree().create_timer(0.05).timeout
 	get_tree().quit()
