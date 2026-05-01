@@ -15,6 +15,10 @@ run/main_scene="uid://hscq63iwd1b"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[global_group]
+
+shooter=""
+
 [input]
 
 move_left={

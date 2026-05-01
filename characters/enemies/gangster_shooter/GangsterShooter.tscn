@@ -351,7 +351,7 @@ radius = 248.00209
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_slg7u"]
 size = Vector2(225.875, 71)
 
-[node name="GangsterShooter" type="CharacterBody2D" unique_id=1698874819]
+[node name="GangsterShooter" type="CharacterBody2D" unique_id=1698874819 groups=["shooter"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_ah44a")
