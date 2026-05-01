@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cn1hkkvxonffe" path="res://assets/characters/player/Idle_2.png" id="8_rwtfg"]
 [ext_resource type="Texture2D" uid="uid://cb63nj0xkcjns" path="res://assets/characters/player/Bash.png" id="9_3iqol"]
 [ext_resource type="Texture2D" uid="uid://bcowo7p1fd8rr" path="res://assets/characters/player/Walk.png" id="9_7aoru"]
+[ext_resource type="PackedScene" uid="uid://iqjy4rkyfgen" path="res://menus/game_over/game_over.tscn" id="12_mv25b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5dd86"]
 atlas = ExtResource("2_rwtfg")
@@ -593,3 +594,6 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "ROUND 1"
 horizontal_alignment = 1
+
+[node name="GameOverUI" parent="UI" unique_id=1869923488 instance=ExtResource("12_mv25b")]
+visible = false

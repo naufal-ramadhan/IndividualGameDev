@@ -35,6 +35,7 @@ var is_dead = false
 var is_bashing = false
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var current_wave = 1
 
 # ==========================================
 # REFERENSI NODE & SCENE
@@ -158,6 +159,7 @@ func update_ui():
 
 func update_wave_ui(wave_num: int):
 	# 1. Update teks kecil di pojok
+	current_wave = wave_num
 	wave_label.text = "Round: " + str(wave_num)
 	
 	# 2. Update teks raksasa di tengah
@@ -302,12 +304,18 @@ func take_damage(amount: float, attacker: Node2D = null):
 		is_hurt = false
 
 func die():
+	if is_dead: return
 	is_dead = true
-	# Tidak memanggil anim.play("dead") di sini karena diurus update_animations
-	print("SWAT Down! Mission Failed.")
 	
-	# Matikan deteksi fisik peluru/musuh
+	print("SWAT Down! Mission Failed.")
 	set_collision_layer_value(1, false)
+	
+	
+	var text_ronde = "YOU SURVIVED UNTIL ROUND " + str(current_wave)
+	$UI/GameOverUI/RoundLabel.text = text_ronde
+	
+	# Munculkan layar Game Over
+	$UI/GameOverUI.show()
 	
 # ==========================================
 # FUNGSI POWER-UPS
