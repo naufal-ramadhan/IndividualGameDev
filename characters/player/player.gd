@@ -45,6 +45,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var ammo_label = $UI/AmmoLabel
 @onready var stamina_bar = $UI/StaminaBar
 @onready var health_bar = $UI/HealthBar
+@onready var wave_label = $UI/WaveLabel
+@onready var center_wave_label = $UI/CenterWaveLabel
 
 @export var bullet_scene: PackedScene
 
@@ -190,6 +192,19 @@ func flip_character(direction):
 		anim.flip_h = true
 		shield_sensor.position.x = -40
 		muzzle.position.x = -abs(muzzle.position.x)
+
+func update_wave_ui(wave_num: int):
+	# 1. Update teks kecil di pojok
+	wave_label.text = "Round: " + str(wave_num)
+	
+	# 2. Update teks raksasa di tengah
+	center_wave_label.text = "ROUND " + str(wave_num)
+	center_wave_label.modulate.a = 1.0 # Munculkan teksnya secara instan (Alpha = 1)
+	
+	# 3. Animasi Fade Out ala CoD Zombies pakai Tween
+	var tween = get_tree().create_tween()
+	# Tahan tulisan di layar selama 1.5 detik, lalu pudarkan ke Alpha 0 selama 2 detik
+	tween.tween_property(center_wave_label, "modulate:a", 0.0, 2.0).set_delay(1.5)
 
 # ==========================================
 # 4. FUNGSI AKSI & PERTARUNGAN

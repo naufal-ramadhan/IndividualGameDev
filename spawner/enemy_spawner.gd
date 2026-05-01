@@ -24,6 +24,9 @@ func _process(delta):
 func mulai_wave_baru():
 	current_wave += 1
 	
+	if player != null and player.has_method("update_wave_ui"):
+		player.update_wave_ui(current_wave)
+	
 	musuh_sisa_di_spawner = current_wave * 2 
 	
 	print("--- WAVE ", current_wave, " DIMULAI! TARGET: ", musuh_sisa_di_spawner, " MUSUH ---")

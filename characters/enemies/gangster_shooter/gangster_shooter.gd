@@ -105,25 +105,28 @@ func shoot_burst(direction):
 	is_shooting = true
 	can_shoot = false
 
-	# JIKA SMG: Mainkan animasi nahan senjata sekali saja di awal
+	# 1. CATAT TIKET STUN SAAT MULAI NEMBAK
+	var current_stun_id = stun_id
+
 	if not animate_per_shot:
 		anim.play("shoot")
 
 	for i in range(burst_count):
-		if is_dead or is_hurt:
+		# 2. CEK: Apakah dia mati, pusing, ATAU tiketnya udah berubah (sempat dipukul)?
+		if is_dead or is_hurt or stun_id != current_stun_id:
 			break 
 			
-		# JIKA PISTOL: Mainkan animasi setiap kali pelatuk ditarik
 		if animate_per_shot:
 			anim.stop() 
 			anim.play("shoot")
 		
-		# --- FASE 1: WIND-UP (SIAP-SIAP NEMBAK) ---
-		# Hanya berjalan jika windup_time disetel > 0 di Inspector
+		# --- FASE 1: WIND-UP ---
 		if windup_time > 0.0:
 			await get_tree().create_timer(windup_time).timeout
-			# Cek lagi, kalau pas lagi angkat pistol dia dipukul Player, batal nembak!
-			if is_dead or is_hurt:
+			
+			# 3. CEK LAGI SETELAH BANGUN TIDUR:
+			# Kalau selama dia nunggu tadi stun_id-nya berubah (artinya dia sempat kena hit), BATALKAN!
+			if is_dead or is_hurt or stun_id != current_stun_id:
 				break
 		
 		# --- FASE 2: PELURU KELUAR ---
@@ -132,20 +135,19 @@ func shoot_burst(direction):
 			bullet.direction = direction
 			bullet.global_position = muzzle.global_position
 			
-			# SEKARANG PASTI JALAN: Kalikan damage asli peluru (25) dengan multiplier di Inspector (misal 0.2)
 			if "damage" in bullet:
 				bullet.damage = bullet.damage * damage_mult
 				
 			get_tree().root.add_child(bullet)
 			
-		# --- FASE 3: JEDA / SISA ANIMASI ---
-		# Untuk SMG: Ini jeda berondongan. Untuk Pistol: Ini sisa waktu buat nurunin senjata.
+		# --- FASE 3: JEDA ANTAR PELURU (BURST) ---
 		await get_tree().create_timer(fire_rate).timeout
 	
 	is_shooting = false
 	
 	await get_tree().create_timer(reload_delay).timeout
 	can_shoot = true
+	
 # ==========================================
 # MANAJEMEN ANIMASI (VISUAL)
 # ==========================================
