@@ -4,6 +4,8 @@ class_name BaseEnemy
 # Kita pakai @export var agar HP bisa diatur per-musuh di Editor!
 @export var max_hp: float = 100.0
 @onready var hp: float = max_hp
+@export var drop_items: Array[PackedScene] 
+@export var drop_chance: float = 0.3
 
 var knockback_force = Vector2.ZERO
 var player_target = null 
@@ -59,5 +61,15 @@ func die():
 	z_index = 0
 	
 	print("Tango Down! (Dari BaseEnemy)")
+	
+	if drop_items.size() > 0 and randf() <= drop_chance:
+		var item_scene = drop_items.pick_random()
+		var item_instance = item_scene.instantiate()
+		
+		item_instance.global_position = global_position + Vector2(0, 40)
+		
+		get_tree().current_scene.call_deferred("add_child", item_instance)
+		
 	await get_tree().create_timer(30.0).timeout
+	
 	queue_free()

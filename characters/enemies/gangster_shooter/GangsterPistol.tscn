@@ -4,8 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://br0rhj3pecexo" path="res://projectiles/EnemyBullet.tscn" id="2_8axji"]
 [ext_resource type="Texture2D" uid="uid://b4tb8sewu1gl7" path="res://assets/enemies/gangster_pistol/Dead.png" id="2_m34nf"]
 [ext_resource type="Texture2D" uid="uid://b4812igsdpbxp" path="res://assets/enemies/gangster_pistol/Hurt.png" id="3_njb4y"]
+[ext_resource type="PackedScene" uid="uid://dhwv77o5c5chb" path="res://power_ups/ammo/ammo.tscn" id="3_w17q3"]
 [ext_resource type="Texture2D" uid="uid://cwm8joqvmm8m2" path="res://assets/enemies/gangster_pistol/Idle.png" id="4_8axji"]
+[ext_resource type="PackedScene" uid="uid://vm1unr54rjaq" path="res://power_ups/nuke/nuke.tscn" id="4_dh40c"]
 [ext_resource type="Texture2D" uid="uid://deshfoifueulv" path="res://assets/enemies/gangster_pistol/Idle_2.png" id="5_njb4y"]
+[ext_resource type="PackedScene" uid="uid://b1lienqoaujf" path="res://power_ups/health/health.tscn" id="5_qldlk"]
 [ext_resource type="Texture2D" uid="uid://dmvnsujxyqj1r" path="res://assets/enemies/gangster_pistol/Run.png" id="6_njb4y"]
 [ext_resource type="Texture2D" uid="uid://n4iabtxvwgfh" path="res://assets/enemies/gangster_pistol/Shot.png" id="7_8axji"]
 [ext_resource type="Texture2D" uid="uid://bahiimp4n40s6" path="res://assets/enemies/gangster_pistol/Walk.png" id="8_njb4y"]
@@ -504,6 +507,7 @@ windup_time = 0.72
 animate_per_shot = true
 shoot_range_left = -338.0
 max_hp = 70.0
+drop_items = Array[PackedScene]([ExtResource("3_w17q3"), ExtResource("4_dh40c"), ExtResource("5_qldlk")])
 
 [node name="CharacterVisualAnimated" type="AnimatedSprite2D" parent="." unique_id=1529142760]
 sprite_frames = SubResource("SpriteFrames_ag1f3")

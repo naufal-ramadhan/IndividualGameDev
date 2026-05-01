@@ -22,6 +22,7 @@ const BASH_KNOCKBACK = 1200.0
 var current_stamina = 100.0
 var current_ammo = MAX_AMMO
 var current_health = MAX_HEALTH
+var reserve_ammo = 15 * MAX_AMMO
 
 # Gerbang Logika (Gatekeepers)
 var is_shielding = false
@@ -150,10 +151,24 @@ func handle_camera(delta):
 	camera.zoom = camera.zoom.lerp(target_zoom, 5.0 * delta)
 
 func update_ui():
-	ammo_label.text = "AMMO: " + str(current_ammo) + " / " + str(MAX_AMMO)
+	ammo_label.text = "AMMO: " + str(current_ammo) + " / " + str(reserve_ammo)
 	stamina_bar.value = current_stamina
 	if health_bar:
 		health_bar.value = current_health
+
+func update_wave_ui(wave_num: int):
+	# 1. Update teks kecil di pojok
+	wave_label.text = "Round: " + str(wave_num)
+	
+	# 2. Update teks raksasa di tengah
+	center_wave_label.text = "ROUND " + str(wave_num)
+	center_wave_label.modulate.a = 1.0 # Munculkan teksnya secara instan (Alpha = 1)
+	
+	# 3. Animasi Fade Out ala CoD Zombies pakai Tween
+	var tween = get_tree().create_tween()
+	# Tahan tulisan di layar selama 1.5 detik, lalu pudarkan ke Alpha 0 selama 2 detik
+	tween.tween_property(center_wave_label, "modulate:a", 0.0, 2.0).set_delay(1.5)
+
 
 # ==========================================
 # 3. PUSAT MANAJEMEN ANIMASI (VISUAL)
@@ -193,19 +208,6 @@ func flip_character(direction):
 		shield_sensor.position.x = -40
 		muzzle.position.x = -abs(muzzle.position.x)
 
-func update_wave_ui(wave_num: int):
-	# 1. Update teks kecil di pojok
-	wave_label.text = "Round: " + str(wave_num)
-	
-	# 2. Update teks raksasa di tengah
-	center_wave_label.text = "ROUND " + str(wave_num)
-	center_wave_label.modulate.a = 1.0 # Munculkan teksnya secara instan (Alpha = 1)
-	
-	# 3. Animasi Fade Out ala CoD Zombies pakai Tween
-	var tween = get_tree().create_tween()
-	# Tahan tulisan di layar selama 1.5 detik, lalu pudarkan ke Alpha 0 selama 2 detik
-	tween.tween_property(center_wave_label, "modulate:a", 0.0, 2.0).set_delay(1.5)
-
 # ==========================================
 # 4. FUNGSI AKSI & PERTARUNGAN
 # ==========================================
@@ -228,15 +230,27 @@ func shoot():
 		print("Peluru Habis! Tekan R")
 
 func reload():
+	if reserve_ammo <= 0 or current_ammo == MAX_AMMO:
+		print("Gak bisa reload! Peluru penuh atau cadangan habis.")
+		return
+
 	is_reloading = true
 	anim.play("reload")
 	print("Reloading...")
 	
 	await get_tree().create_timer(1.0).timeout 
-	
-	current_ammo = MAX_AMMO
+
+	var bullets_needed = MAX_AMMO - current_ammo
+	if reserve_ammo >= bullets_needed:
+		current_ammo += bullets_needed
+		reserve_ammo -= bullets_needed
+	else:
+		current_ammo += reserve_ammo
+		reserve_ammo = 0
+		
 	is_reloading = false
-	print("Reload Selesai! Peluru Penuh.")
+	print("Reload Selesai! Sisa kantong: ", reserve_ammo)
+	update_ui()
 
 func shield_bash():
 	is_bashing = true
@@ -294,3 +308,32 @@ func die():
 	
 	# Matikan deteksi fisik peluru/musuh
 	set_collision_layer_value(1, false)
+	
+# ==========================================
+# FUNGSI POWER-UPS
+# ==========================================
+func activate_nuke():
+	print("TACTICAL NUKE INCOMING!")
+	
+	var flash = ColorRect.new()
+	flash.color = Color(1, 1, 1, 1) # Warna putih solid
+	flash.set_anchors_preset(Control.PRESET_FULL_RECT) # Paksa menutupi seluruh layar
+	flash.z_index = 100 # Pastikan posisinya di atas segalanya
+	$UI.add_child(flash)
+	
+	# Pudarkan efek putihnya perlahan selama 1 detik, lalu hapus nodenya
+	var tween = get_tree().create_tween()
+	tween.tween_property(flash, "modulate:a", 0.0, 1.0)
+	tween.tween_callback(flash.queue_free)
+
+	var musuh_di_arena = get_tree().get_nodes_in_group("enemy")
+	
+	for musuh in musuh_di_arena:
+		if not musuh.is_dead and musuh.has_method("take_damage"):
+			# Berikan damage super besar biar pasti mati
+			musuh.take_damage(9999.0) 
+			
+			# Opsional: Bikin mereka terpental gara-gara ledakan nuke
+			if musuh.has_method("apply_knockback"):
+				var arah_terpental = 1 if musuh.global_position.x > global_position.x else -1
+				musuh.apply_knockback(arah_terpental * 2000, 1.5)

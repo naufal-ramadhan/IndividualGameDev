@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dhwv77o5c5chb"]
+
+[ext_resource type="PackedScene" uid="uid://c6l25vfy41qqd" path="res://power_ups/base_item.tscn" id="1_qw1w7"]
+[ext_resource type="Script" uid="uid://b7cbirktjt8f7" path="res://power_ups/ammo/ammo.gd" id="2_yic3p"]
+[ext_resource type="Texture2D" uid="uid://dngs3msgsjyc7" path="res://assets/power_ups/ammo-pistol 32px.png" id="3_gim1c"]
+
+[node name="AmmoDrop" unique_id=843452873 instance=ExtResource("1_qw1w7")]
+script = ExtResource("2_yic3p")
+
+[node name="Sprite2D" parent="." index="0" unique_id=1412975605]
+texture = ExtResource("3_gim1c")

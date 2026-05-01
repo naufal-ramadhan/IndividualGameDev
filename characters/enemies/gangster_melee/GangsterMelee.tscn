@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://ch46g4q5jg1ja" path="res://characters/enemies/gangster_melee/gangster_melee.gd" id="1_slg7u"]
 [ext_resource type="Texture2D" uid="uid://bycxxb7orcadx" path="res://assets/enemies/gangster_melee/Attack_1.png" id="2_xhh4u"]
+[ext_resource type="PackedScene" uid="uid://dhwv77o5c5chb" path="res://power_ups/ammo/ammo.tscn" id="2_xpj6f"]
 [ext_resource type="Texture2D" uid="uid://cbfmdoh0lj6id" path="res://assets/enemies/gangster_melee/Attack_2.png" id="3_75eqw"]
+[ext_resource type="PackedScene" uid="uid://vm1unr54rjaq" path="res://power_ups/nuke/nuke.tscn" id="3_xgvcy"]
+[ext_resource type="PackedScene" uid="uid://b1lienqoaujf" path="res://power_ups/health/health.tscn" id="4_3bnci"]
 [ext_resource type="Texture2D" uid="uid://rhv3fcssq4yu" path="res://assets/enemies/gangster_melee/Attack_3.png" id="4_xpj6f"]
 [ext_resource type="Texture2D" uid="uid://dd5i8qyyrtwgk" path="res://assets/enemies/gangster_melee/Dead.png" id="5_xgvcy"]
 [ext_resource type="Texture2D" uid="uid://bv1sp8xqe731v" path="res://assets/enemies/gangster_melee/Hurt.png" id="6_3bnci"]
@@ -670,6 +673,7 @@ collision_mask = 3
 script = ExtResource("1_slg7u")
 melee_damage = 30.0
 max_hp = 150.0
+drop_items = Array[PackedScene]([ExtResource("2_xpj6f"), ExtResource("3_xgvcy"), ExtResource("4_3bnci")])
 
 [node name="CharacterVisualAnimated" type="AnimatedSprite2D" parent="." unique_id=1529142760]
 sprite_frames = SubResource("SpriteFrames_ag1f3")
