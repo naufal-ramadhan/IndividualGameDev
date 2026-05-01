@@ -5,3 +5,5 @@ func apply_effect(player: Node2D):
 	player.current_health += 50
 	player.current_health = clamp(player.current_health, 0, player.MAX_HEALTH)
 	print("Kevlar diambil! (Health Penuh)")
+	if player.has_node("PickUpAudio"):
+			player.get_node("PickUpAudio").play()

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b4qhwqrarlagr"]
 
 [ext_resource type="Script" uid="uid://bvf3oq2mqv802" path="res://menus/main_menu/main_menu.gd" id="1_xbn2l"]
+[ext_resource type="AudioStream" uid="uid://bn676b4qimkse" path="res://assets/BGM/MainMenuBGM.mp3" id="2_1nwmw"]
 
 [node name="MainMenu" type="Control" unique_id=837026034]
 layout_mode = 3
@@ -64,6 +65,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 32
 text = "QUIT"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1248163996]
+stream = ExtResource("2_1nwmw")
+autoplay = true
 
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="QUIT" to="." method="_on_quit_pressed"]

@@ -218,6 +218,7 @@ func shoot():
 		is_shooting = true
 		current_ammo -= 1
 		anim.play("shoot")
+		$ShootSFX.play()
 		print("DOR! Sisa peluru: ", current_ammo)
 		
 		if bullet_scene != null:
@@ -237,6 +238,8 @@ func reload():
 		return
 
 	is_reloading = true
+	if has_node("ReloadAudio"):
+			$ReloadAudio.play()	
 	anim.play("reload")
 	print("Reloading...")
 	
@@ -306,22 +309,41 @@ func take_damage(amount: float, attacker: Node2D = null):
 func die():
 	if is_dead: return
 	is_dead = true
-	
-	print("SWAT Down! Mission Failed.")
 	set_collision_layer_value(1, false)
 	
+	# ==========================================
+	# SAPU BERSIH SUARA MUSUH!
+	# ==========================================
+	var semua_musuh = get_tree().get_nodes_in_group("enemy")
+	for musuh in semua_musuh:
+		# Hentikan suara tembakan kalau ada
+		if musuh.has_node("ShootSFX"):
+			musuh.get_node("ShootSFX").stop()
+		# Hentikan suara pukulan kalau ada
+		if musuh.has_node("PunchSFX"):
+			musuh.get_node("PunchSFX").stop()
+	# ==========================================
 	
-	var text_ronde = "YOU SURVIVED UNTIL ROUND " + str(current_wave)
-	$UI/GameOverUI/RoundLabel.text = text_ronde
-	
-	# Munculkan layar Game Over
+	# Update UI Game Over
+	$UI/GameOverUI/RoundLabel.text = "YOU SURVIVED UNTIL ROUND " + str(current_wave)
 	$UI/GameOverUI.show()
+	$UI/GameOverUI/GameOverBGM.play()
+	
+	# Matikan BGM Utama
+	var main_bgm = get_tree().current_scene.get_node_or_null("LevelBGM")
+	if main_bgm: main_bgm.stop()
+	
+	# Bekukan dunia
+	get_tree().paused = true
 	
 # ==========================================
 # FUNGSI POWER-UPS
 # ==========================================
 func activate_nuke():
 	print("TACTICAL NUKE INCOMING!")
+	
+	if has_node("NukeAudio"):
+		$NukeAudio.play()
 	
 	var flash = ColorRect.new()
 	flash.color = Color(1, 1, 1, 1) # Warna putih solid

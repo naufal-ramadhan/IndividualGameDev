@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://crjvkpvwa2go0" path="res://assets/enemies/gangster_melee/Idle_2.png" id="8_hgapb"]
 [ext_resource type="Texture2D" uid="uid://ij55qrwa3who" path="res://assets/enemies/gangster_melee/Run.png" id="9_vkq40"]
 [ext_resource type="Texture2D" uid="uid://bqf6jw0hcwd0t" path="res://assets/enemies/gangster_melee/Walk.png" id="10_4g60v"]
+[ext_resource type="AudioStream" uid="uid://c1meenix4i3u2" path="res://assets/SFX/Punch.mp3" id="14_xgvcy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vcuwv"]
 atlas = ExtResource("2_xhh4u")
@@ -701,3 +702,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1203687933]
 position = Vector2(-14.4375, 0)
 shape = SubResource("RectangleShape2D_slg7u")
+
+[node name="PunchSFX" type="AudioStreamPlayer2D" parent="." unique_id=346733075]
+stream = ExtResource("14_xgvcy")

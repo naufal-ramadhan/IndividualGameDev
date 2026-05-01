@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dh7jy6e67crmg" path="res://characters/enemies/gangster_shooter/GangsterShooter.tscn" id="11_j4pg1"]
 [ext_resource type="PackedScene" uid="uid://kxyo8x5ol3ao" path="res://characters/enemies/gangster_melee/GangsterMelee.tscn" id="12_nu2w0"]
 [ext_resource type="PackedScene" uid="uid://bpoadddwcgoij" path="res://characters/enemies/gangster_shooter/GangsterPistol.tscn" id="13_rv5to"]
+[ext_resource type="AudioStream" uid="uid://5xspe6djbu3x" path="res://assets/BGM/BGM.mp3" id="14_nu2w0"]
 [ext_resource type="PackedScene" uid="uid://bbrjuwa1m21uu" path="res://characters/player/Player.tscn" id="101_vkckm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vcl05"]
@@ -105,3 +106,7 @@ position = Vector2(-636, 572)
 
 [node name="SpawnKanan" type="Marker2D" parent="EnemySpawner" unique_id=1639744510]
 position = Vector2(1778, 566)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=128603825]
+stream = ExtResource("14_nu2w0")
+autoplay = true

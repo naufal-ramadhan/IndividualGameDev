@@ -140,6 +140,11 @@ func shoot_burst(direction):
 				
 			get_tree().root.add_child(bullet)
 			
+			if has_node("ShootSFX"):
+				var sfx = $ShootSFX
+				sfx.pitch_scale = randf_range(0.9, 1.1) # Variasi suara
+				sfx.play()
+			
 		# --- FASE 3: JEDA ANTAR PELURU (BURST) ---
 		await get_tree().create_timer(fire_rate).timeout
 	

@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://c6rfbn7pbf1xp" path="res://assets/enemies/gangster_shooter/Idle.png" id="5_nfj2n"]
 [ext_resource type="Texture2D" uid="uid://dyvbwgqbfencq" path="res://assets/enemies/gangster_shooter/Run.png" id="7_14p8s"]
 [ext_resource type="Texture2D" uid="uid://r26xsirmfk4c" path="res://assets/enemies/gangster_shooter/Walk.png" id="8_oq3au"]
+[ext_resource type="AudioStream" uid="uid://c31jh2twivly0" path="res://assets/SFX/SingleSMGSFX.mp3" id="12_352rq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqcrn"]
 atlas = ExtResource("3_epy26")
@@ -390,3 +391,7 @@ shape = SubResource("RectangleShape2D_slg7u")
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=1188758409]
 position = Vector2(17, 25)
+
+[node name="ShootSFX" type="AudioStreamPlayer2D" parent="." unique_id=290296598]
+stream = ExtResource("12_352rq")
+volume_db = -7.0

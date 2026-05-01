@@ -89,7 +89,9 @@ func attack(target):
 	is_attacking = true
 	can_attack = false
 	var attack_list = ["attack1", "attack2", "attack3"]
-	anim.play(attack_list.pick_random()) 
+	anim.play(attack_list.pick_random())
+	if has_node("PunchSFX"):
+		$PunchSFX.play()
 	
 	if target.has_method("take_damage"): target.take_damage(melee_damage, self)
 

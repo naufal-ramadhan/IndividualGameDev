@@ -12,6 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://cb63nj0xkcjns" path="res://assets/characters/player/Bash.png" id="9_3iqol"]
 [ext_resource type="Texture2D" uid="uid://bcowo7p1fd8rr" path="res://assets/characters/player/Walk.png" id="9_7aoru"]
 [ext_resource type="PackedScene" uid="uid://iqjy4rkyfgen" path="res://menus/game_over/game_over.tscn" id="12_mv25b"]
+[ext_resource type="AudioStream" uid="uid://bycdyldpjbfab" path="res://assets/SFX/SilencedPistolSFX.mp3" id="13_ratqf"]
+[ext_resource type="AudioStream" uid="uid://duxj8y155odn7" path="res://assets/SFX/PickUpSFX.mp3" id="14_ir81o"]
+[ext_resource type="AudioStream" uid="uid://dkh4ou5ixwrxi" path="res://assets/SFX/ReloadSFX.mp3" id="15_7aoru"]
+[ext_resource type="AudioStream" uid="uid://bcxn7ln7wrj47" path="res://assets/SFX/NukeSFX.mp3" id="16_5dd86"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5dd86"]
 atlas = ExtResource("2_rwtfg")
@@ -596,4 +600,17 @@ text = "ROUND 1"
 horizontal_alignment = 1
 
 [node name="GameOverUI" parent="UI" unique_id=1869923488 instance=ExtResource("12_mv25b")]
+process_mode = 3
 visible = false
+
+[node name="ShootSFX" type="AudioStreamPlayer2D" parent="." unique_id=704599155]
+stream = ExtResource("13_ratqf")
+
+[node name="PickUpAudio" type="AudioStreamPlayer2D" parent="." unique_id=2035106358]
+stream = ExtResource("14_ir81o")
+
+[node name="ReloadAudio" type="AudioStreamPlayer2D" parent="." unique_id=1361282556]
+stream = ExtResource("15_7aoru")
+
+[node name="NukeAudio" type="AudioStreamPlayer2D" parent="." unique_id=94943435]
+stream = ExtResource("16_5dd86")
