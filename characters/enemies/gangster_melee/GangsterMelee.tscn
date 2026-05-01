@@ -668,10 +668,12 @@ size = Vector2(8.875, 71)
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_slg7u")
+melee_damage = 30.0
+max_hp = 150.0
 
 [node name="CharacterVisualAnimated" type="AnimatedSprite2D" parent="." unique_id=1529142760]
 sprite_frames = SubResource("SpriteFrames_ag1f3")
-animation = &"hurt"
+animation = &"attack1"
 
 [node name="CharacterHitBox" type="CollisionShape2D" parent="." unique_id=997627723]
 position = Vector2(0, 31)

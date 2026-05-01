@@ -43,7 +43,7 @@ func die():
 	is_dead = true
 	collision_layer = 0
 	collision_mask = 1 
-	z_index = -1
+	z_index = 0
 	
 	print("Tango Down! (Dari BaseEnemy)")
 	await get_tree().create_timer(30.0).timeout

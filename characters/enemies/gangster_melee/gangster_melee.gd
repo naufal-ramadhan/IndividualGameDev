@@ -89,7 +89,7 @@ func attack(target):
 	var attack_list = ["attack1", "attack2", "attack3"]
 	anim.play(attack_list.pick_random()) 
 	
-	if target.has_method("take_damage"): target.take_damage(melee_damage)
+	if target.has_method("take_damage"): target.take_damage(melee_damage, self)
 
 	await get_tree().create_timer(0.6).timeout
 	is_attacking = false

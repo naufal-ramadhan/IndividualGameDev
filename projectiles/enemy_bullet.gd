@@ -27,5 +27,5 @@ func _on_body_entered(body):
 		
 	# 4. Kalau nabrak Player, oper damage-nya
 	if body.has_method("take_damage"):
-		body.take_damage(damage)
+		body.take_damage(damage, self)
 		queue_free()

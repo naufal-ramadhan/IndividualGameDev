@@ -240,12 +240,23 @@ func shield_bash():
 	await get_tree().create_timer(0.4).timeout
 	is_bashing = false
 
-func take_damage(amount: float):
+func take_damage(amount: float, attacker: Node2D = null):
 	if is_dead: return
 
-	if is_shielding:
-		print("Serangan diblokir!")
-		return
+	if is_shielding and attacker != null:
+		var is_facing_right = not anim.flip_h 
+		
+		var is_attacker_in_front = false
+		if is_facing_right and attacker.global_position.x > global_position.x:
+			is_attacker_in_front = true
+		elif not is_facing_right and attacker.global_position.x < global_position.x:
+			is_attacker_in_front = true
+			
+		if is_attacker_in_front:
+			print("Serangan dari DEPAN diblokir!")
+			return
+		else:
+			print("Aduh! Ditembak dari BELAKANG!")
 
 	current_health -= amount
 	current_health = clamp(current_health, 0, MAX_HEALTH)
@@ -254,7 +265,6 @@ func take_damage(amount: float):
 		die()
 	else:
 		is_hurt = true
-		# Tidak memanggil anim.play("hurt") di sini karena diurus update_animations
 		anim.modulate = Color(1, 0.5, 0.5) 
 		
 		await get_tree().create_timer(0.4).timeout
