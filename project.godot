@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="IndividualGameJam"
-run/main_scene="uid://hscq63iwd1b"
+run/main_scene="uid://b4qhwqrarlagr"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -75,3 +75,4 @@ shield_bash={
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.40832946, 0.40832946, 0.40832946, 1)
