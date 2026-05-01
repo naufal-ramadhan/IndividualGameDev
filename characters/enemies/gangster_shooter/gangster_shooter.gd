@@ -66,9 +66,11 @@ func _physics_process(delta):
 
 	# 3. Kalau kena hit, cancel semua gerakan (termasuk nembak)
 	if is_hurt:
+		velocity.x = move_toward(velocity.x, 0, 4000 * delta)
+		
 		move_and_slide() 
 		update_animations() 
-		return 
+		return
 
 	# 4. Logika AI
 	if is_shooting:

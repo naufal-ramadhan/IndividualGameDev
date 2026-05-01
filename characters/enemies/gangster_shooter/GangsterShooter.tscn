@@ -200,7 +200,7 @@ animations = [{
 "duration": 0.4,
 "texture": SubResource("AtlasTexture_oto0q")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 5.0
 }, {
@@ -359,7 +359,7 @@ max_hp = 80.0
 
 [node name="CharacterVisualAnimated" type="AnimatedSprite2D" parent="." unique_id=1529142760]
 sprite_frames = SubResource("SpriteFrames_ag1f3")
-animation = &"walk"
+animation = &"hurt"
 
 [node name="CharacterHitBox" type="CollisionShape2D" parent="." unique_id=997627723]
 position = Vector2(0, 31)

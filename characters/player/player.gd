@@ -14,7 +14,7 @@ const ZOOM_DEFAULT = Vector2(2.2, 2.2)
 const ZOOM_SHIELD = Vector2(2.5, 2.5)  
 const MAX_HEALTH = 100.0
 const BASH_DAMAGE = 10.0
-const BASH_KNOCKBACK = 100.0
+const BASH_KNOCKBACK = 1200.0
 
 # ==========================================
 # VARIABEL STATUS (STATE)
@@ -225,18 +225,18 @@ func reload():
 
 func shield_bash():
 	is_bashing = true
-	anim.play("shield_bash") # Pastikan ini dipanggil di sini!
+	anim.play("shield_bash")
 	
 	var targets = shield_sensor.get_overlapping_bodies()
 	for body in targets:
 		if body.name == "Player": continue
 		
 		if body.has_method("take_damage"):
-			body.take_damage(BASH_DAMAGE)
+			body.take_damage(BASH_DAMAGE) 
+			
 			if body.has_method("apply_knockback"):
 				var knockback_dir = -1 if anim.flip_h else 1
-				body.apply_knockback(knockback_dir * BASH_KNOCKBACK)
-
+				body.apply_knockback(knockback_dir * BASH_KNOCKBACK, 1.5)
 	await get_tree().create_timer(0.4).timeout
 	is_bashing = false
 

@@ -11,20 +11,18 @@ var player_target = null
 var is_chasing = false
 var is_hurt = false
 var is_dead = false
+var stun_id: int = 0 # <-- Variabel antrean stun
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-func apply_knockback(amount: float):
+func apply_knockback(amount: float, stun_duration: float = 1.5):
 	if is_dead: return
-	knockback_force.x = amount
-	is_hurt = true	
-	await get_tree().create_timer(0.4).timeout
-	is_hurt = false
+	velocity.x = amount 
+	trigger_stun(stun_duration)
 
 func take_damage(amount: float):
 	if is_dead: return
 	hp -= amount
-	is_hurt = true
 	velocity.x = 0
 	
 	if not is_chasing:
@@ -36,11 +34,26 @@ func take_damage(amount: float):
 	if hp <= 0:
 		die()
 	else:
-		await get_tree().create_timer(0.3).timeout
+		trigger_stun(0.3)
+
+# ==========================================
+# FUNGSI MANAJEMEN STUN
+# ==========================================
+func trigger_stun(duration: float):
+	is_hurt = true
+	
+	stun_id += 1 
+	var my_id = stun_id
+	
+	await get_tree().create_timer(duration).timeout
+	
+	if my_id == stun_id and not is_dead:
 		is_hurt = false
+# ==========================================
 
 func die():
 	is_dead = true
+	remove_from_group("enemy")
 	collision_layer = 0
 	collision_mask = 1 
 	z_index = 0

@@ -29,9 +29,11 @@ func _physics_process(delta):
 	if not is_on_floor(): velocity.y += gravity * delta
 
 	if is_hurt:
+		velocity.x = move_toward(velocity.x, 0, 4000 * delta)
+		
 		move_and_slide() 
 		update_animations() 
-		return 
+		return
 
 	if is_attacking:
 		velocity.x = 0 
