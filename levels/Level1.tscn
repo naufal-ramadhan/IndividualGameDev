@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dh7jy6e67crmg" path="res://characters/enemies/gangster_shooter/GangsterShooter.tscn" id="11_j4pg1"]
 [ext_resource type="PackedScene" uid="uid://kxyo8x5ol3ao" path="res://characters/enemies/gangster_melee/GangsterMelee.tscn" id="12_nu2w0"]
 [ext_resource type="PackedScene" uid="uid://bpoadddwcgoij" path="res://characters/enemies/gangster_shooter/GangsterPistol.tscn" id="13_rv5to"]
+[ext_resource type="PackedScene" path="res://characters/enemies/gangster_charger/GangsterCharger.tscn" id="15_chrg1"]
 [ext_resource type="AudioStream" uid="uid://5xspe6djbu3x" path="res://assets/BGM/BGM.mp3" id="14_nu2w0"]
 [ext_resource type="PackedScene" uid="uid://bbrjuwa1m21uu" path="res://characters/player/Player.tscn" id="101_vkckm"]
 
@@ -99,7 +100,7 @@ position = Vector2(-198, 508)
 shape = SubResource("RectangleShape2D_lbu4x")
 
 [node name="EnemySpawner" parent="." unique_id=13670902 instance=ExtResource("10_vcl05")]
-list_musuh = Array[PackedScene]([ExtResource("11_j4pg1"), ExtResource("12_nu2w0"), ExtResource("13_rv5to")])
+list_musuh = Array[PackedScene]([ExtResource("11_j4pg1"), ExtResource("12_nu2w0"), ExtResource("13_rv5to"), ExtResource("15_chrg1")])
 
 [node name="SpawnKiri" type="Marker2D" parent="EnemySpawner" unique_id=212379002]
 position = Vector2(-636, 572)
