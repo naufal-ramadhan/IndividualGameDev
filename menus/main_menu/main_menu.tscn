@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://bql104ftcaiir" path="res://assets/fonts/PixelifySans-VariableFont_wght.ttf" id="2_ml8bw"]
 [ext_resource type="Texture2D" uid="uid://bysiby3sha3l6" path="res://assets/menu/MainMenu.png" id="3_vu5tu"]
 [ext_resource type="AudioStream" uid="uid://qc1p6ngu2n1u" path="res://assets/SFX/ButtonSFX.mp3" id="5_oic2i"]
+[ext_resource type="Texture2D" uid="uid://c1xs2ugf200c7" path="res://assets/environment/2 Background/Overlay_illumination.png" id="6_lite"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ml8bw"]
 font_size = 64
@@ -37,6 +38,19 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_vu5tu")
 expand_mode = 1
+
+[node name="IlluminationOverlay" type="TextureRect" parent="." unique_id=384502759]
+modulate = Color(1, 1, 1, 0.14)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_lite")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=104285822]
 visible = false
