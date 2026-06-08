@@ -15,6 +15,7 @@ const ZOOM_SHIELD = Vector2(1.3, 1.3)
 const MAX_HEALTH = 100.0
 const BASH_DAMAGE = 10.0
 const BASH_KNOCKBACK = 1200.0
+const IMPACT_EFFECT_SCENE = preload("res://effects/impact_effect.tscn")
 
 # ==========================================
 # VARIABEL STATUS (STATE)
@@ -288,10 +289,14 @@ func take_damage(amount: float, attacker: Node2D = null):
 			
 		if is_attacker_in_front:
 			print("Serangan dari DEPAN diblokir!")
+			if attacker is Area2D:
+				spawn_impact_effect(attacker, Color(0.3, 0.8, 1.0, 1.0), 1.05, 4.0)
 			return
 		else:
 			print("Aduh! Ditembak dari BELAKANG!")
 
+	if attacker is Area2D:
+		spawn_impact_effect(attacker, Color(0.95, 0.05, 0.02, 1.0), 1.0)
 	current_health -= amount
 	current_health = clamp(current_health, 0, MAX_HEALTH)
 
@@ -305,6 +310,23 @@ func take_damage(amount: float, attacker: Node2D = null):
 		
 		anim.modulate = Color(1, 1, 1)
 		is_hurt = false
+
+func spawn_impact_effect(attacker: Node2D, effect_color: Color, strength: float, push_inward: float = 0.0):
+	if IMPACT_EFFECT_SCENE == null:
+		return
+	var impact = IMPACT_EFFECT_SCENE.instantiate()
+	var hit_position = global_position + Vector2(0, -8)
+	if attacker is Area2D:
+		hit_position = attacker.global_position
+		if "direction" in attacker:
+			hit_position.x += attacker.direction * push_inward
+	impact.global_position = hit_position
+	if impact.has_method("setup"):
+		var impact_direction = Vector2.LEFT
+		if attacker is Area2D and "direction" in attacker:
+			impact_direction = Vector2(-attacker.direction, 0)
+		impact.setup(effect_color, strength, impact_direction)
+	get_tree().current_scene.add_child(impact)
 
 func die():
 	if is_dead: return
