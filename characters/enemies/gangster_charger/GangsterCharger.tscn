@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bmtvyd3hxrn4s" path="res://assets/enemies/gangster_charger/Special.png" id="12_f3gwp"]
 [ext_resource type="Texture2D" uid="uid://bpvoluie3fb88" path="res://assets/enemies/gangster_charger/Walk.png" id="13_sch4w"]
 [ext_resource type="AudioStream" uid="uid://c1meenix4i3u2" path="res://assets/SFX/Punch.mp3" id="14_xgvcy"]
+[ext_resource type="AudioStream" uid="uid://cjwqqn22oefem" path="res://assets/SFX/BottleBreaking.mp3" id="15_bottle"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ukgeq"]
 atlas = ExtResource("5_4o7rh")
@@ -322,7 +323,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"charge",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 0.4,
@@ -444,35 +445,6 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 0.4,
-"texture": SubResource("AtlasTexture_b7tfq")
-}, {
-"duration": 0.4,
-"texture": SubResource("AtlasTexture_tqvwg")
-}, {
-"duration": 0.4,
-"texture": SubResource("AtlasTexture_d2juc")
-}, {
-"duration": 0.4,
-"texture": SubResource("AtlasTexture_57qn6")
-}, {
-"duration": 0.4,
-"texture": SubResource("AtlasTexture_6qo76")
-}, {
-"duration": 0.4,
-"texture": SubResource("AtlasTexture_r7gn8")
-}, {
-"duration": 0.4,
-"texture": SubResource("AtlasTexture_wb4bk")
-}, {
-"duration": 0.4,
-"texture": SubResource("AtlasTexture_jvula")
-}],
-"loop": true,
-"name": &"charge",
-"speed": 8.0
 }, {
 "frames": [{
 "duration": 0.4,
@@ -599,3 +571,6 @@ shape = SubResource("RectangleShape2D_slg7u")
 
 [node name="PunchSFX" type="AudioStreamPlayer2D" parent="." unique_id=346733075]
 stream = ExtResource("14_xgvcy")
+
+[node name="BottleBreakSFX" type="AudioStreamPlayer2D" parent="." unique_id=729541018]
+stream = ExtResource("15_bottle")

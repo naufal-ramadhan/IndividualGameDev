@@ -5,6 +5,7 @@ extends PatrollingEnemy
 @export var charge_speed: float = 520.0
 @export var charge_duration: float = 0.45
 @export var minimum_charge_visual_time: float = 0.18
+@export var special_sfx_lead_time: float = 0.20
 
 var is_attacking = false
 var can_attack = true
@@ -88,6 +89,7 @@ func start_charge(direction):
 	flip_character(charge_direction)
 	velocity.x = 0
 	anim.play("special")
+	play_bottle_break_before_special_ends()
 
 	await anim.animation_finished
 
@@ -115,6 +117,26 @@ func hit_player_during_charge(target):
 	if target.has_method("take_damage"):
 		target.take_damage(melee_damage, self)
 	finish_charge()
+
+func play_bottle_break_before_special_ends():
+	var delay = max(0.0, get_animation_length("special") - special_sfx_lead_time)
+	await get_tree().create_timer(delay).timeout
+	if is_winding_up_charge and not is_dead and not is_hurt and has_node("BottleBreakSFX"):
+		$BottleBreakSFX.play()
+
+func get_animation_length(animation_name: String) -> float:
+	if anim.sprite_frames == null or not anim.sprite_frames.has_animation(animation_name):
+		return 0.65
+
+	var animation_speed = anim.sprite_frames.get_animation_speed(animation_name)
+	if animation_speed <= 0.0:
+		return 0.65
+
+	var total_duration = 0.0
+	for frame_index in range(anim.sprite_frames.get_frame_count(animation_name)):
+		total_duration += anim.sprite_frames.get_frame_duration(animation_name, frame_index)
+
+	return total_duration / animation_speed
 
 func update_animations():
 	if is_dead:
